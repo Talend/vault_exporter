@@ -1,0 +1,16 @@
+# goreleaser.yml
+project_name: vault-exporter
+build:
+  binary: vault-exporter
+  goos:
+    - linux
+  goarch:
+    - amd64
+  ldflags: -s -w -X main.version=v{{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
+archive:
+  format: tar.gz
+  files:
+    - README.md
+    - LICENSE
+snapshot:
+  name_template: snapshot-{{.Commit}}
