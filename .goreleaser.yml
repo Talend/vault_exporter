@@ -1,7 +1,7 @@
 # goreleaser.yml
-project_name: vault-exporter
+project_name: vault_exporter
 build:
-  binary: vault-exporter
+  binary: vault_exporter
   goos:
     - linux
   goarch:
