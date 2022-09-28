@@ -6,11 +6,15 @@ build:
     - linux
   goarch:
     - amd64
+    - arm64
   ldflags: -s -w -X main.version=v{{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
-archive:
-  format: tar.gz
-  files:
+archives:
+  - format: tar.gz
+    files:
     - README.md
     - LICENSE
+    replacements:
+      amd64: 64bit
+      arm64: ARM64
 snapshot:
   name_template: snapshot-{{.Commit}}
