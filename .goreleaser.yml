@@ -13,8 +13,5 @@ archives:
     files:
     - README.md
     - LICENSE
-    replacements:
-      amd64: 64bit
-      arm64: ARM64
 snapshot:
   name_template: snapshot-{{.Commit}}
