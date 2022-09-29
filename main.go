@@ -4,10 +4,11 @@ import (
 	"net/http"
 	_ "net/http/pprof"
 
+	"log"
+
 	vault_api "github.com/hashicorp/vault/api"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/prometheus/common/log"
 	"github.com/prometheus/common/version"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
@@ -155,7 +156,7 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 		ch <- prometheus.MustNewConstMetric(
 			up, prometheus.GaugeValue, 0,
 		)
-		log.Errorf("Failed to collect health from Vault server: %v", err)
+		log.Printf("Failed to collect health from Vault server: %v", err)
 		return
 	}
 
@@ -228,13 +229,13 @@ func init() {
 }
 
 func main() {
-	log.AddFlags(kingpin.CommandLine)
+	// log.AddFlags(kingpin.CommandLine)
 	kingpin.Version(version.Print("vault_exporter"))
 	kingpin.HelpFlag.Short('h')
 	kingpin.Parse()
 
-	log.Infoln("Starting vault_exporter", version.Info())
-	log.Infoln("Build context", version.BuildContext())
+	log.Println("Starting vault_exporter", version.Info())
+	log.Println("Build context", version.BuildContext())
 
 	exporter, err := NewExporter()
 	if err != nil {
@@ -258,6 +259,6 @@ func main() {
 		}
 	})
 
-	log.Infoln("Listening on", *listenAddress)
+	log.Println("Listening on", *listenAddress)
 	log.Fatal(http.ListenAndServe(*listenAddress, nil))
 }
